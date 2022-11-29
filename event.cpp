@@ -25,3 +25,11 @@ void event::print_event() {
 	cout << "Event Description " << this->description << endl;
 	cout << "Event Duration: " << this->duration << " minutes" << endl;
 }
+
+bool event::operator<(event const& e)
+{
+	if (this->priority > e.priority) {
+		return true;
+	}
+	return false;
+}

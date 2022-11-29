@@ -12,6 +12,7 @@ public:
 	event(string name, string description, int duration, 
 		int startTime, int endTime, int priority, int specificDay);
 	void print_event();    //used for testing purposes, prints event information to console 
+	bool operator<(const event&x, const event& y);
 private: 
 	string name;    //name of the event 
 	string description;    //description of the event

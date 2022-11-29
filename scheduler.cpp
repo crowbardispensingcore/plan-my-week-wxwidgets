@@ -8,7 +8,13 @@ void scheduler::create_event() {
 
 }
 void scheduler::push_event(event e) {
-
+	eq.emplace(e);
+}
+void scheduler::pop_event() {
+	eq.pop();
+}
+event scheduler::top() {
+	return eq.top();
 }
 schedule::schedule() {
 	times.resize(7);

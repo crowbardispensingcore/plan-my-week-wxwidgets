@@ -1,35 +1,34 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <iostream>
+#include <fstream>
+#include <string>
 #include <sstream>
+#include <vector>
 #include "scheduler.h"
 #include "event.h"
+#include "file_manager.h"
 
 using namespace std;
-event convertEvent(string s) {   //test code to convert a string into a event object 
-	vector<string> vars;
-	stringstream ss(s);
-	while (ss.good()) {
-		string substr;
-		getline(ss, substr, ',');
-		vars.push_back(substr);
-	}
-	event e(vars[0], vars[1], stoi(vars[2]), stoi(vars[3]), stoi(vars[4]), stoi(vars[5]), stoi(vars[6]));
-	return e;
-}
 int main() {
-	ifstream ifs;
 	string filename = "testfile.txt";
-	string line;
-	ifs.open(filename);
+	fileManager FM;
+	FM.open_file(filename);
 
-	if (ifs.fail()) {
-		cout << "ERROR! " << filename << " opening failure" << endl;
-		exit(1);
-	}
-	while (getline(ifs, line)) {
-		event e = convertEvent(line);
-		e.print_event();   //print the elements of a event object
-	}
-	ifs.close();
+	scheduler mainScheduler;
+	mainScheduler.push_event(FM.get_event());
+	mainScheduler.push_event(FM.get_event());
+
+	event e = mainScheduler.top();
+	e.print_event();
+
+	mainScheduler.pop_event();
+
+	event f = mainScheduler.top();
+	f.print_event();
+
+
+	FM.close_file();
+	
 }
