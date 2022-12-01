@@ -1,6 +1,6 @@
 #include <wx/wx.h>
 #include "planner_app.h"
-#include "HelloWorldFrame.h"
+#include "main_frame.h"
 
 using namespace std;
 

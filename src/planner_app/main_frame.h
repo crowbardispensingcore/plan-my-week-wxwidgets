@@ -1,12 +1,11 @@
-#ifndef HELLOWORLDFRAME_H_
-#define HELLOWORLDFRAME_H_
+#pragma once
 
 #include <wx/wx.h>
 
-class HelloWorldFrame: public wxFrame
+class MainFrame: public wxFrame
 {
 public:
-    HelloWorldFrame(const wxString& title,
+    MainFrame(const wxString& title,
                     const wxPoint& pos, const wxSize& size);
 
 private:
@@ -25,5 +24,3 @@ enum
     ID_Bonjour  = 2,
     ID_GutenTag = 3
 };
-
-#endif /* HELLOWORLDFRAME_H_ */

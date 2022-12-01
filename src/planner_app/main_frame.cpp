@@ -1,18 +1,18 @@
 #include <iostream>
 #include <wx/wx.h>
-#include "HelloWorldFrame.h"
+#include "main_frame.h"
 
 using namespace std;
 
-wxBEGIN_EVENT_TABLE(HelloWorldFrame, wxFrame)
-    EVT_MENU(ID_Hello,    HelloWorldFrame::OnHello)
-    EVT_MENU(ID_Bonjour,  HelloWorldFrame::OnBonjour)
-    EVT_MENU(ID_GutenTag, HelloWorldFrame::OnGutenTag)
-    EVT_MENU(wxID_ABOUT,  HelloWorldFrame::OnAbout)
-    EVT_MENU(wxID_EXIT,   HelloWorldFrame::OnExit)
+wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
+    EVT_MENU(ID_Hello,    MainFrame::OnHello)
+    EVT_MENU(ID_Bonjour,  MainFrame::OnBonjour)
+    EVT_MENU(ID_GutenTag, MainFrame::OnGutenTag)
+    EVT_MENU(wxID_ABOUT,  MainFrame::OnAbout)
+    EVT_MENU(wxID_EXIT,   MainFrame::OnExit)
 wxEND_EVENT_TABLE()
 
-HelloWorldFrame::HelloWorldFrame(const wxString& title,
+MainFrame::MainFrame(const wxString& title,
                  const wxPoint& pos, const wxSize& size)
     : wxFrame(NULL, wxID_ANY, title, pos, size)
 {
@@ -39,31 +39,31 @@ HelloWorldFrame::HelloWorldFrame(const wxString& title,
     SetStatusText("Welcome to the Hello World app!");
 }
 
-void HelloWorldFrame::OnAbout(wxCommandEvent& event)
+void MainFrame::OnAbout(wxCommandEvent& event)
 {
     wxMessageBox("This is a wxWidgets' Hello world sample",
                  "About Hello World", wxOK | wxICON_INFORMATION);
 }
 
-void HelloWorldFrame::OnExit(wxCommandEvent& event)
+void MainFrame::OnExit(wxCommandEvent& event)
 {
     cout << "OnExit: Exiting Hello World app!" << endl;
     Close(true);
 }
 
-void HelloWorldFrame::OnHello(wxCommandEvent& event)
+void MainFrame::OnHello(wxCommandEvent& event)
 {
     wxMessageBox("Hello, world!",
                  "OnHello", wxOK | wxICON_INFORMATION);
 }
 
-void HelloWorldFrame::OnBonjour(wxCommandEvent& event)
+void MainFrame::OnBonjour(wxCommandEvent& event)
 {
     wxMessageBox("Bonjour, monde!",
                  "OnBonjour", wxOK | wxICON_INFORMATION);
 }
 
-void HelloWorldFrame::OnGutenTag(wxCommandEvent& event)
+void MainFrame::OnGutenTag(wxCommandEvent& event)
 {
     wxMessageBox("Guten Tag, Welt!",
                  "OnGutenTag", wxOK | wxICON_INFORMATION);
