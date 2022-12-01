@@ -4,6 +4,8 @@
 #include <vector>
 #include <list>
 #include <queue>
+#include <stack>
+#include <utility>
 #include "event.h"
 class scheduler {
 public:
@@ -19,13 +21,16 @@ public:
 	bool empty();
 	int convert_time(int time);
 	void push_timeConflict(event e);
+	void reorder_busy();
+	void make_schedule();
 private:
 	vector<vector<int>> times;
+	vector<pair<int, int>>busy;
 	vector<list<event>> events;
 	//priority event queue(eq) for storing events
 	priority_queue<event> eq;
-	priority_queue<event>timeConflicts;
+	stack<event>timeConflicts;
 
-	int search_time();
+	pair<int, int> search_time();
 };
 #endif
