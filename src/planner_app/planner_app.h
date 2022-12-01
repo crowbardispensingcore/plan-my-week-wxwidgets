@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class HelloWorldApp: public wxApp
+class PlannerApp: public wxApp
 {
 public:
     virtual bool OnInit() override;

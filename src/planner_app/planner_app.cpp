@@ -1,12 +1,12 @@
 #include <wx/wx.h>
-#include "HelloWorldApp.h"
+#include "planner_app.h"
 #include "HelloWorldFrame.h"
 
 using namespace std;
 
-bool HelloWorldApp::OnInit()
+bool PlannerApp::OnInit()
 {
-    cout << "OnInit: Initializing Hello World app!" << endl;
+    cout << "OnInit: Initializing Planner app..." << endl;
 
     HelloWorldFrame *frame = new HelloWorldFrame("Hello World",
                                                  wxPoint(50, 50),
@@ -16,4 +16,4 @@ bool HelloWorldApp::OnInit()
 }
 
 // Create a new application object.
-wxIMPLEMENT_APP(HelloWorldApp);
+wxIMPLEMENT_APP(PlannerApp);
