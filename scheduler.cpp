@@ -41,11 +41,12 @@ int scheduler::search_time() {
 	int endTime = temp.get_endTime();
 	int specificDay = temp.get_specificDay();
 
-	if (startTime != -1) {
-
-	}
 	if (specificDay != -1) {
-		//for(int i = 32; i < )
+		if (startTime != -1) {
+			for (int i = convert_time(startTime); i < 96; i++) {
+
+			}
+		}
 	}
 	return 0;
 }
@@ -57,4 +58,26 @@ bool scheduler::empty() {
 	else {
 		return false;
 	}
+}
+
+int scheduler::convert_time(int time) {
+	int first, second, third, fourth, final;
+	final = 0;
+	first = time / 1000;
+	second = (time - first * 1000) / 100;
+	third = ((time - first * 1000) - (second * 100)) / 10;
+	fourth = ((time - first * 1000) - (second * 100)) - (third * 10);
+
+	int hour , minutes;
+	hour = first * 10 + second;
+	hour *= 60;
+	minutes = third * 10 + fourth;
+	final = hour + minutes;
+
+	return (final / 15)-1;
+
+	return 0;
+}
+void scheduler::push_timeConflict(event e) {
+	timeConflicts.emplace(e);
 }

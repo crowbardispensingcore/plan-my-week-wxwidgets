@@ -17,11 +17,14 @@ public:
 	event top();
 	void append_event();
 	bool empty();
+	int convert_time(int time);
+	void push_timeConflict(event e);
 private:
 	vector<vector<int>> times;
 	vector<list<event>> events;
 	//priority event queue(eq) for storing events
-	priority_queue<event> eq; 
+	priority_queue<event> eq;
+	priority_queue<event>timeConflicts;
 
 	int search_time();
 };
