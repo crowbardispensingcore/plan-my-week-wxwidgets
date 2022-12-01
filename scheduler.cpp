@@ -52,6 +52,7 @@ void scheduler::reorder_busy() {
 		busy[j + 1].second = key;
 	}
 }
+//fix this please
 pair<int, int> scheduler::search_time() {
 	event temp = eq.top();
 	int duration = temp.get_duration();
@@ -63,7 +64,7 @@ pair<int, int> scheduler::search_time() {
 
 	if (specificDay != -1) {
 		if (startTime != -1) {
-			for (int i = convert_time(startTime); i < 96; i++) {
+			for (int i = convert_time(startTime); i < find_endTime(temp.get_startTime(), temp.get_duration()); i++) {
 				if (times[specificDay][i] != 0) {
 					returnValue.first = specificDay;
 					returnValue.second = -1;
@@ -71,7 +72,7 @@ pair<int, int> scheduler::search_time() {
 				}
 			}
 			returnValue.first = specificDay;
-			returnValue.second = convert_time(startTime);
+			returnValue.second = startTime;
 			return returnValue;
 		}
 		else {
@@ -88,7 +89,7 @@ pair<int, int> scheduler::search_time() {
 					temp_duration -= 15;
 					if (temp_duration == 0) {
 						returnValue.first = specificDay;
-						returnValue.second = convert_time(startTime);
+						returnValue.second = temp_start;
 						return returnValue;
 					}
 				}
@@ -105,7 +106,7 @@ pair<int, int> scheduler::search_time() {
 					temp_duration -= 15;
 					if (temp_duration == 0) {
 						returnValue.first = specificDay;
-						returnValue.second = convert_time(startTime);
+						returnValue.second = temp_start;
 						return returnValue;
 					}
 				}
@@ -131,7 +132,7 @@ pair<int, int> scheduler::search_time() {
 					temp_duration -= 15;
 					if (temp_duration == 0) {
 						returnValue.first = busy[j].first;
-						returnValue.second = convert_time(temp_start);
+						returnValue.second = temp_start;
 						return returnValue;
 					}
 				}
@@ -148,7 +149,7 @@ pair<int, int> scheduler::search_time() {
 					temp_duration -= 15;
 					if (temp_duration == 0) {
 						returnValue.first = busy[j].first;
-						returnValue.second = convert_time(temp_start);
+						returnValue.second = temp_start;
 						return returnValue;
 					}
 				}
@@ -162,10 +163,14 @@ pair<int, int> scheduler::search_time() {
 void scheduler::make_schedule() {
 	event e;
 	int durationSize;
+	list<event>::iterator it;
 	while (!eq.empty()) {
 		e = eq.top();
 		durationSize = e.get_duration() / 15;
 		pair<int, int> curr_event = search_time();
+		e.set_startTime(find_startTime(curr_event.second));
+		e.set_endTime(find_endTime(e.get_startTime(), e.get_duration()));
+		e.set_specificDay(curr_event.first);
 		if (curr_event.second == -1) {
 			push_timeConflict(eq.top());
 		}
@@ -173,19 +178,49 @@ void scheduler::make_schedule() {
 			for (int i = 0; i < durationSize; i++) {
 				times[curr_event.first][curr_event.second] = 1;
 			}
+			it = events[curr_event.first].begin();
+			if (events[curr_event.first].empty()) {
+				events[curr_event.first].push_back(e);
+			}
+			else {
+				while (e.get_endTime() > it->get_startTime() ) {
+					it++;
+				}
+				events[curr_event.first].emplace(it, e);
+			}
 		}
 		eq.pop();
 	}
 }
-bool scheduler::empty() {
-	if (eq.empty()) {
-		return true;
-	}
-	else {
-		return false;
+int scheduler::find_startTime(int index) {
+	int startTime = index * 15;  //time in minutes 
+	int hour = startTime / 60;
+	int minute = startTime % 60;
+
+	startTime = hour * 100;
+	startTime += minute;
+	return startTime;
+}
+int scheduler::find_endTime(int startTime, int duration) {
+	int endTime = startTime;
+	int length = duration;
+	int hour  = (duration / 60) * 100;
+	endTime += hour;
+	int minute = length % 15;
+	endTime += minute;
+
+	return endTime;
+}
+void scheduler::print_schedule() {
+	list<event>::iterator it;
+	for (int i = 0; i < 7; i++) {
+		it = events[i].begin();
+		cout << i << endl;
+		for (it = events[i].begin(); it != events[i].end(); ++i) {
+			it->print_event();
+		}
 	}
 }
-
 int scheduler::convert_time(int time) {
 	int first, second, third, fourth, final;
 	final = 0;
@@ -201,8 +236,6 @@ int scheduler::convert_time(int time) {
 	final = hour + minutes;
 
 	return (final / 15)-1;
-
-	return 0;
 }
 void scheduler::push_timeConflict(event e) {
 	timeConflicts.push(e);

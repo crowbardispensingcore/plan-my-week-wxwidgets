@@ -20,6 +20,9 @@ public:
 	int get_endTime() { return endTime; }
 	int get_specificDay() { return specificDay; }
 
+	void set_startTime(int startTime) { this->startTime = startTime; }
+	void set_endTime(int endTime) { this->endTime = endTime; }
+	void set_specificDay(int specificDay) { this->specificDay = specificDay; }
 private: 
 	string name;    //name of the event 
 	string description;    //description of the event

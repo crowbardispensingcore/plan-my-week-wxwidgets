@@ -20,13 +20,10 @@ int main() {
 
 	while (!FM.eof()) {
 		mainScheduler.push_event(FM.get_event());
-		mainScheduler.top().print_event();
-		mainScheduler.pop_event();
 	}
-	/*while (!mainScheduler.empty()) {
-		mainScheduler.top().print_event();
-		mainScheduler.pop_event();
-	}*/
+	mainScheduler.make_schedule();
+	mainScheduler.print_schedule();
+
 
 	FM.close_file();
 	

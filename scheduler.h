@@ -18,11 +18,13 @@ public:
 	//returns event at top of priority queue
 	event top();
 	void append_event();
-	bool empty();
 	int convert_time(int time);
+	int find_startTime(int index);
+	int find_endTime(int startTime, int duration);
 	void push_timeConflict(event e);
 	void reorder_busy();
 	void make_schedule();
+	void print_schedule();
 private:
 	vector<vector<int>> times;
 	vector<pair<int, int>>busy;

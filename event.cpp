@@ -23,7 +23,7 @@ event::event(string name, string description, int duration,
 void event::print_event() {
 	cout << "Event Name: " << this->name << endl;
 	cout << "Event Description " << this->description << endl;
-	cout << "Event Duration: " << this->duration << " minutes" << endl;
+	cout << "Start Time: " << this->startTime << " End Time: "<<this->endTime<<" Duration: "<<this->duration << endl;
 }
 bool operator<(const event& lhs, const event& rhs) {
 	return lhs.priority > rhs.priority;
