@@ -55,3 +55,12 @@ event fileManager::convert_event(string s) {
     event e(vars[0], vars[1], stoi(vars[2]), stoi(vars[3]), stoi(vars[4]), stoi(vars[5]), stoi(vars[6]));
     return e;
 }
+
+bool fileManager::eof() {
+    if (ifs.eof()) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}

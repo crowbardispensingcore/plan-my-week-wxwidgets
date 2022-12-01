@@ -7,20 +7,22 @@
 #include "event.h"
 class scheduler {
 public:
+	scheduler();
 	void create_event();
-	void push_event(event e);    //pushes event into priority queue based on priority
-	void pop_event();    //pops event at top of priority queue
-	event top();    //returns event at top of priority queue
-private:
-	//schedule s;
-	priority_queue<event> eq;    //priority event queue(eq) for storing events
-};
-
-class schedule {
-public:
-	schedule();
+	//pushes event into priority queue based on priority
+	void push_event(event e);    
+	//pops event at top of priority queue
+	void pop_event();   
+	//returns event at top of priority queue
+	event top();
+	void append_event();
+	bool empty();
 private:
 	vector<vector<int>> times;
 	vector<list<event>> events;
+	//priority event queue(eq) for storing events
+	priority_queue<event> eq; 
+
+	int search_time();
 };
 #endif

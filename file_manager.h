@@ -11,6 +11,7 @@ public:
     void open_file(string filename);    //opens a given filename
     void close_file();    //closes the current open file 
     event get_event();    //retrieves next event in opened file and returns an event object
+    bool eof();
 private:
     ifstream ifs;
     ofstream ofs;

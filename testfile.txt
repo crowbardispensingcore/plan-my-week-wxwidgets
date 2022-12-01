@@ -1,2 +1,6 @@
-CMPE 135 CLASS,Lecture for object oriented design,60,1350,1450,1,1
-SLEEP,time for sleeping,60,1350,1450,0,1
+CMPE 146,Lecture for embedded systems,140,900,1120,1,0
+CMPE 135,Lecture for Object Oriented Design,75,1345,1500,1,0
+Lunch,Lunch Time,60,1200,1300,0,0
+Dinner,Dinner Time,60,1800,1900,0,0
+Workout,Workout Time,60,1900,2000,0,0
+Sleep,Sleep Time,450,-1,-1,0,0

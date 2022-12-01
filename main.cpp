@@ -17,17 +17,17 @@ int main() {
 	FM.open_file(filename);
 
 	scheduler mainScheduler;
-	mainScheduler.push_event(FM.get_event());
-	mainScheduler.push_event(FM.get_event());
+	mainScheduler.push_event(FM.get_event());    //this line gets the next event from testfile
+	mainScheduler.top().print_event();           //this line gets the event from top of queue and prints it to terminal
+	mainScheduler.pop_event();                   //this line pops the top event from queue
 
-	event e = mainScheduler.top();
-	e.print_event();
-
-	mainScheduler.pop_event();
-
-	event f = mainScheduler.top();
-	f.print_event();
-
+	/*while (!FM.eof()) {
+		mainScheduler.push_event(FM.get_event());
+	}*/
+	/*while (!mainScheduler.empty()) {
+		mainScheduler.top().print_event();
+		mainScheduler.pop_event();
+	}*/
 
 	FM.close_file();
 	
