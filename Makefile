@@ -14,7 +14,7 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
 
-CXXFLAGS := $(shell wx-config --cxxflags)
+CXXFLAGS := $(shell wx-config --cxxflags) -std=c++11
 WX_LIBS := $(shell wx-config --libs)
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
