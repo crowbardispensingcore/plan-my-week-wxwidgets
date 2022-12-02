@@ -17,11 +17,11 @@ public:
 	void pop_event();   
 	//returns event at top of priority queue
 	event top();
-	void append_event();
+	//reorders days of the week based on how population of events low to high
+	void reorder_busy();
 	int convert_time(int time);
 	int find_startTime(int index);
 	void push_timeConflict(event e);
-	void reorder_busy();
 	void make_schedule();
 	void print_schedule();
 	int find_end_index(int start_index, int duration);
