@@ -52,19 +52,38 @@ void scheduler::reorder_busy() {
 		busy[j + 1].second = key;
 	}
 }
-//fix this please
+int scheduler::find_end_index(int start_index, int duration) {
+	int returnvalue = start_index;
+	int temp = duration;
+	returnvalue += temp/15;
+	if (temp % 15 != 0) {
+		returnvalue += 1;
+	}
+	return returnvalue;
+}
+int scheduler::convert_duration(int dur) {
+	int duration = dur;
+	duration = duration / 15;
+	duration *= 15;
+	if (dur % 15 != 0) {
+		duration += 15;
+	}
+	return duration;
+}
 pair<int, int> scheduler::search_time() {
 	event temp = eq.top();
-	int duration = temp.get_duration();
+	int duration = convert_duration(temp.get_duration());
 	int startTime = temp.get_startTime();
 	int endTime = temp.get_endTime();
 	int specificDay = temp.get_specificDay();
 
 	pair<int, int> returnValue;
 
-	if (specificDay != -1) {
-		if (startTime != -1) {
-			for (int i = convert_time(startTime); i < find_endTime(temp.get_startTime(), temp.get_duration()); i++) {
+	if (specificDay != -1) {    //if there is a specific day requested
+		if (startTime != -1) {  //if there is a specific start time requested
+			int start_index = convert_time(startTime);
+			int end_index = find_end_index(start_index, duration);
+			for (int i = start_index; i <= end_index; i++) {
 				if (times[specificDay][i] != 0) {
 					returnValue.first = specificDay;
 					returnValue.second = -1;
@@ -72,7 +91,7 @@ pair<int, int> scheduler::search_time() {
 				}
 			}
 			returnValue.first = specificDay;
-			returnValue.second = startTime;
+			returnValue.second = convert_time(startTime);
 			return returnValue;
 		}
 		else {
@@ -164,27 +183,38 @@ void scheduler::make_schedule() {
 	event e;
 	int durationSize;
 	list<event>::iterator it;
-	while (!eq.empty()) {
+	while (eq.size() > 1) {
 		e = eq.top();
-		durationSize = e.get_duration() / 15;
+		durationSize = convert_duration(e.get_duration()) / 15;
 		pair<int, int> curr_event = search_time();
-		e.set_startTime(find_startTime(curr_event.second));
-		e.set_endTime(find_endTime(e.get_startTime(), e.get_duration()));
-		e.set_specificDay(curr_event.first);
+		if (curr_event.first != -1 && curr_event.second != -1) {
+			e.set_startTime(find_startTime(curr_event.second));
+			e.set_endTime(find_startTime(curr_event.second + durationSize));
+			e.set_specificDay(curr_event.first);
+			for (int i = 0; i < 7; i++) {
+				if (busy[i].first == curr_event.first) {
+					busy[i].second += durationSize;
+					break;
+				}
+			}
+		}
 		if (curr_event.second == -1) {
 			push_timeConflict(eq.top());
 		}
 		else {
-			for (int i = 0; i < durationSize; i++) {
-				times[curr_event.first][curr_event.second] = 1;
+			for (int i = curr_event.second; i < curr_event.second+durationSize; i++) {
+				times[curr_event.first][i] = 1;
 			}
 			it = events[curr_event.first].begin();
 			if (events[curr_event.first].empty()) {
 				events[curr_event.first].push_back(e);
 			}
 			else {
-				while (e.get_endTime() > it->get_startTime() ) {
+				while (e.get_endTime() > it->get_startTime()) {
 					it++;
+					if (it == events[curr_event.first].end()) {
+						break;
+					}
 				}
 				events[curr_event.first].emplace(it, e);
 			}
@@ -193,7 +223,7 @@ void scheduler::make_schedule() {
 	}
 }
 int scheduler::find_startTime(int index) {
-	int startTime = index * 15;  //time in minutes 
+	int startTime = (index+1) * 15;  //time in minutes 
 	int hour = startTime / 60;
 	int minute = startTime % 60;
 
@@ -201,22 +231,12 @@ int scheduler::find_startTime(int index) {
 	startTime += minute;
 	return startTime;
 }
-int scheduler::find_endTime(int startTime, int duration) {
-	int endTime = startTime;
-	int length = duration;
-	int hour  = (duration / 60) * 100;
-	endTime += hour;
-	int minute = length % 15;
-	endTime += minute;
-
-	return endTime;
-}
 void scheduler::print_schedule() {
 	list<event>::iterator it;
 	for (int i = 0; i < 7; i++) {
 		it = events[i].begin();
 		cout << i << endl;
-		for (it = events[i].begin(); it != events[i].end(); ++i) {
+		for (it = events[i].begin(); it != events[i].end(); ++it) {
 			it->print_event();
 		}
 	}

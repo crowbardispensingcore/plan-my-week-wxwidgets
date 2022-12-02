@@ -31,6 +31,5 @@ private:
 	int endTime;    //end in military time
 	int priority;    //priority of the requested event 
 	int specificDay;    //Specific requested day of week, 0 == Monday, 1 == Tuesday etc...
-	vector<int>repeating;
 };
 #endif
