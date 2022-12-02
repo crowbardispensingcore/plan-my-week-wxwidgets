@@ -8,7 +8,7 @@ bool PlannerApp::OnInit()
 {
     cout << "OnInit: Initializing Planner app..." << endl;
 
-    HelloWorldFrame *frame = new HelloWorldFrame("Hello World",
+    MainFrame *frame = new MainFrame("Hello World",
                                                  wxPoint(50, 50),
                                                  wxSize(450, 340) );
     frame->Show(true);
