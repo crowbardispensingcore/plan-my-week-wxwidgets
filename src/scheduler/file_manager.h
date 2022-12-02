@@ -7,16 +7,21 @@ using namespace std;
 
 class fileManager {
 public:
+    //default constructor 
     fileManager();
-    void open_file(string filename);    //opens a given filename
-    void close_file();    //closes the current open file 
-    event get_event();    //retrieves next event in opened file and returns an event object
+    //opens a input file given filename
+    void open_file(string filename);    
+    //closes the current input file
+    void close_file();   
+    //retrieves next event in opened file and returns an event object
+    event get_event();    
+    //checks if input file stream has reached end of file
     bool eof();
 private:
-    ifstream ifs;
+    ifstream ifs;    
     ofstream ofs;
     bool file_opened;
-
-    event convert_event(string s);    //converts comma seperated line into event object
+    //converts event data from string to event object
+    event convert_event(string s);   
 };
 #endif

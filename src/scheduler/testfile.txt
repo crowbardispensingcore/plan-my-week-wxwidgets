@@ -1,25 +1,24 @@
-CMPE 146,Lecture for embedded systems,140,900,1120,1,0
-CMPE 135,Lecture for Object Oriented Design,75,1345,1500,1,0
-Lunch,Lunch Time,60,1200,1300,0,0
-Dinner,Dinner Time,60,1800,1900,0,0
-Workout,Workout Time,60,1900,2000,0,0
-Sleep,Sleep Time,450,-1,-1,0,0
-Sleep,Sleep Time,450,-1,-1,0,1
-CMPE 146,Lecture for embedded systems,140,900,1120,1,2
-CMPE 135,Lecture for Object Oriented Design,75,1345,1500,1,2
-Lunch,Lunch Time,60,1200,1300,0,2
-Dinner,Dinner Time,60,1800,1900,0,2
-Workout,Workout Time,60,1900,2000,0,2
-Sleep,Sleep Time,450,-1,-1,0,2
-Lunch,Lunch Time,60,1200,1300,0,3
-Dinner,Dinner Time,60,1800,1900,0,3
-Sleep,Sleep Time,450,-1,-1,0,3
-CMPE 146,Lecture for embedded systems,140,900,1120,1,4
-Lunch,Lunch Time,60,1200,1300,0,4
-Dinner,Dinner Time,60,1800,1900,0,4
-Sleep,Sleep Time,450,-1,-1,0,4
-Lunch,Lunch Time,60,1200,1300,0,5
-Dinner,Dinner Time,60,1800,1900,0,5
-Sleep,Sleep Time,450,-1,-1,0,5
-Lunch,Lunch Time,60,1200,1300,0,6
-Dinner,Dinner Time,60,1800,1900,0,6
+CMPE 146,Lecture for embedded systems,140,900,1120,0,0
+CMPE 135,Lecture for Object Oriented Design,75,1345,1500,0,0
+Lunch,Lunch Time,60,1200,1300,2,0
+Dinner,Dinner Time,60,1800,1900,2,0
+Workout,Workout Time,60,1900,2000,3,0
+Sleep,Sleep Time,450,2200,-1,1,1
+CMPE 146,Lecture for embedded systems,140,900,1120,0,2
+CMPE 135,Lecture for Object Oriented Design,75,1345,1500,0,2
+Lunch,Lunch Time,60,1200,1300,2,2
+Dinner,Dinner Time,60,1800,1900,2,2
+Workout,Workout Time,60,1900,2000,3,2
+Sleep,Sleep Time,450,2200,-1,1,2
+Lunch,Lunch Time,60,1200,1300,2,3
+Dinner,Dinner Time,60,1800,1900,2,3
+Sleep,Sleep Time,450,2200,-1,1,3
+CMPE 146,Lecture for embedded systems,140,900,1120,0,4
+Lunch,Lunch Time,60,1200,1300,2,4
+Dinner,Dinner Time,60,1800,1900,2,4
+Sleep,Sleep Time,450,2200,-1,1,4
+Lunch,Lunch Time,60,1200,1300,2,5
+Dinner,Dinner Time,60,1800,1900,2,5
+Sleep,Sleep Time,450,2200,-1,1,5
+Lunch,Lunch Time,60,1200,1300,2,6
+Dinner,Dinner Time,60,1800,1900,2,6

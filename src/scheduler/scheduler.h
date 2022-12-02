@@ -19,13 +19,20 @@ public:
 	event top();
 	//reorders days of the week based on how population of events low to high
 	void reorder_busy();
-	int convert_time(int time);
-	int find_startTime(int index);
-	void push_timeConflict(event e);
+	//converts military time to index of vector to represent that time
+	int time_to_idx(int time);
+	//converts index of vector to military time
+	int idx_to_time(int index);
+	//calculates index of event end time in vector 
+	int calc_end_idx(int start_index, int duration);
+	//calculates and returns length of duration in terms of vector index sizing
+	int dur_length(int dur);
+	//creates schedule based on priority of events 
 	void make_schedule();
+	//prints the weeks schedule onto terminal
 	void print_schedule();
-	int find_end_index(int start_index, int duration);
-	int convert_duration(int dur);
+	//pushes event with time conflict onto time conflict stack
+	void push_timeConflict(event e);
 private:
 	vector<vector<int>> times;
 	vector<pair<int, int>>busy;
@@ -33,7 +40,7 @@ private:
 	//priority event queue(eq) for storing events
 	priority_queue<event> eq;
 	stack<event>timeConflicts;
-
+	//searches for next optimal and available spot in schedule for an event and returns the day and time as a pair
 	pair<int, int> search_time();
 };
 #endif

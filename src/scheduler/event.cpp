@@ -17,8 +17,8 @@ event::event(string name, string description, int duration,
 	this->description = description;
 	this->duration = duration;
 	this->startTime = startTime;
-	this->specificDay = specificDay;
 	this->priority = priority;
+	this->specificDay = specificDay;
 }
 //prints a single events details
 void event::print_event() {

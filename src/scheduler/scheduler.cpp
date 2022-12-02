@@ -48,7 +48,8 @@ void scheduler::reorder_busy() {
 		busy[j + 1].second = key;
 	}
 }
-int scheduler::convert_time(int time) {
+//converts military time to index of vector to represent that time
+int scheduler::time_to_idx(int time) {
 	int first, second, third, fourth, final;
 	final = 0;
 	first = time / 1000;
@@ -64,7 +65,18 @@ int scheduler::convert_time(int time) {
 
 	return (final / 15) - 1;
 }
-int scheduler::find_end_index(int start_index, int duration) {
+//converts index of vector to military time
+int scheduler::idx_to_time(int index) {
+	int startTime = (index + 1) * 15;  //time in minutes 
+	int hour = startTime / 60;
+	int minute = startTime % 60;
+
+	startTime = hour * 100;
+	startTime += minute;
+	return startTime;
+}
+//calculates index of event end time in vector 
+int scheduler::calc_end_idx(int start_index, int duration) {
 	int returnvalue = start_index;
 	int temp = duration;
 	returnvalue += temp/15;
@@ -73,7 +85,8 @@ int scheduler::find_end_index(int start_index, int duration) {
 	}
 	return returnvalue;
 }
-int scheduler::convert_duration(int dur) {
+//calculates and returns length of duration in terms of vector index sizing
+int scheduler::dur_length(int dur) {
 	int duration = dur;
 	duration = duration / 15;
 	duration *= 15;
@@ -82,19 +95,20 @@ int scheduler::convert_duration(int dur) {
 	}
 	return duration;
 }
+//searches for next optimal and available spot in schedule for an event and returns the day and time as a pair
 pair<int, int> scheduler::search_time() {
-	event temp = eq.top();
-	int duration = convert_duration(temp.get_duration());
-	int startTime = temp.get_startTime();
-	int endTime = temp.get_endTime();
-	int specificDay = temp.get_specificDay();
+	event curr_event = eq.top();
+	int duration = dur_length(curr_event.get_duration());
+	int startTime = curr_event.get_startTime();
+	int endTime = curr_event.get_endTime();
+	int specificDay = curr_event.get_specificDay();
 
 	pair<int, int> returnValue;
 
 	if (specificDay != -1) {    //if there is a specific day requested
 		if (startTime != -1) {  //if there is a specific start time requested
-			int start_index = convert_time(startTime);
-			int end_index = find_end_index(start_index, duration);
+			int start_index = time_to_idx(startTime);
+			int end_index = calc_end_idx(start_index, duration);
 			for (int i = start_index; i <= end_index; i++) {
 				if (times[specificDay][i] != 0) {
 					returnValue.first = specificDay;
@@ -103,7 +117,7 @@ pair<int, int> scheduler::search_time() {
 				}
 			}
 			returnValue.first = specificDay;
-			returnValue.second = convert_time(startTime);
+			returnValue.second = time_to_idx(startTime);
 			return returnValue;
 		}
 		else {
@@ -191,21 +205,22 @@ pair<int, int> scheduler::search_time() {
 		return returnValue;
 	}
 }
+//creates schedule based on priority of events 
 void scheduler::make_schedule() {
 	event e;
-	int durationSize;
+	int durLength;
 	list<event>::iterator it;
 	while (eq.size() > 1) {
 		e = eq.top();
-		durationSize = convert_duration(e.get_duration()) / 15;
+		durLength = dur_length(e.get_duration()) / 15;
 		pair<int, int> curr_event = search_time();
 		if (curr_event.first != -1 && curr_event.second != -1) {
-			e.set_startTime(find_startTime(curr_event.second));
-			e.set_endTime(find_startTime(curr_event.second + durationSize));
+			e.set_startTime(idx_to_time(curr_event.second));
+			e.set_endTime(idx_to_time(curr_event.second + durLength));
 			e.set_specificDay(curr_event.first);
 			for (int i = 0; i < 7; i++) {
 				if (busy[i].first == curr_event.first) {
-					busy[i].second += durationSize;
+					busy[i].second += durLength;
 					break;
 				}
 			}
@@ -214,7 +229,7 @@ void scheduler::make_schedule() {
 			push_timeConflict(eq.top());
 		}
 		else {
-			for (int i = curr_event.second; i < curr_event.second+durationSize; i++) {
+			for (int i = curr_event.second; i < curr_event.second+ durLength; i++) {
 				times[curr_event.first][i] = 1;
 			}
 			it = events[curr_event.first].begin();
@@ -234,15 +249,7 @@ void scheduler::make_schedule() {
 		eq.pop();
 	}
 }
-int scheduler::find_startTime(int index) {
-	int startTime = (index+1) * 15;  //time in minutes 
-	int hour = startTime / 60;
-	int minute = startTime % 60;
-
-	startTime = hour * 100;
-	startTime += minute;
-	return startTime;
-}
+//prints the weeks schedule onto terminal
 void scheduler::print_schedule() {
 	list<event>::iterator it;
 	string day;
@@ -279,7 +286,16 @@ void scheduler::print_schedule() {
 		}
 		cout << endl;
 	}
+	if (!timeConflicts.empty()) {
+		cout << "TIME CONFLICTS" << endl;
+		while (!timeConflicts.empty()) {
+			timeConflicts.top().print_event();
+			cout << endl;
+			timeConflicts.pop();
+		}
+	}
 }
+//pushes event with time conflict onto time conflict stack
 void scheduler::push_timeConflict(event e) {
 	timeConflicts.push(e);
 }
