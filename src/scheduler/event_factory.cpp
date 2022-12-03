@@ -21,3 +21,4 @@ Event EventFactory::create_param_event(int option, int duration, int startTime) 
 	default:
 		return Event();
 	}
+}

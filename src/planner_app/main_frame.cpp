@@ -13,8 +13,22 @@ MainFrame::MainFrame(const wxString& title,
 {
     initMenu();
 
+    wxSizer* mainFrameSizer = new wxBoxSizer(wxHORIZONTAL);
+
+
 
     
+    wxSizer* monSizer = new wxBoxSizer(wxVERTICAL);
+    wxPanel* monPanel = new wxPanel(this, wxID_ANY);
+    
+    for (int i = 0; i < 10; i++) {
+        createNewEventPanel(monSizer, monPanel);
+    }
+
+    monPanel->SetSizer(monSizer);
+
+    mainFrameSizer->Add(monPanel);
+
     
 
 
@@ -77,7 +91,14 @@ void MainFrame::onCreateNewEvent(wxCommandEvent& event)
     dialog->Destroy();
 }
 
-void MainFrame::createNewEventPanel() {
-    wxPanel* eventSizer = new wxPanel(this, wxID_ANY);
+void MainFrame::createNewEventPanel(wxSizer* parentSizer, wxPanel* parentPanel) {
+    wxPanel* eventPanel = new wxPanel(parentPanel, wxID_ANY);
+    wxSizer* eventSizer = new wxBoxSizer(wxVERTICAL);
 
+    wxStaticText* eventLabel = new wxStaticText(eventPanel, wxID_ANY, "Test Event");
+
+    eventSizer->Add(eventLabel);
+    eventPanel->SetSizer(eventSizer);
+
+    parentSizer->Add(eventPanel);
 }

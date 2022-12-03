@@ -13,7 +13,7 @@ public:
 
 private:
 
-    void createNewEventPanel();
+    void createNewEventPanel(wxSizer* parentSizer, wxPanel* parentPanel);
 
     void onHello(wxCommandEvent& event);
     void onAbout(wxCommandEvent& event);
