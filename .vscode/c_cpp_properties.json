@@ -4,9 +4,9 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/local/lib/wx/include/gtk3-unicode-static-3.3",
+                // "/usr/local/lib/wx/include/gtk3-unicode-static-3.3",
                 "/usr/local/lib/wx/include/gtk3-unicode-static-3.2",
-                "/usr/local/include/wx-3.3",
+                // "/usr/local/include/wx-3.3",
                 "/usr/local/include/wx-3.2"
             ],
             "defines": [],

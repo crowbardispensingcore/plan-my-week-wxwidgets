@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "main_frame.h"
+#include "add_new_event_dialog.h"
+
 
 using std::cout;
 using std::endl;
@@ -10,6 +12,11 @@ MainFrame::MainFrame(const wxString& title,
     : wxFrame(NULL, wxID_ANY, title, pos, size)
 {
     initMenu();
+
+
+    
+    
+
 
     CreateStatusBar();
     SetStatusText("Welcome to Plan My Week!");
@@ -56,6 +63,21 @@ void MainFrame::onExit(wxCommandEvent& event)
 
 void MainFrame::onCreateNewEvent(wxCommandEvent& event)
 {
-    wxMessageBox("Hello, world!",
-                 "OnHello", wxOK | wxICON_INFORMATION);
+    AddNewEventDialog* dialog = new AddNewEventDialog(this, wxID_ANY, "Add A New Event");
+    if (dialog->ShowModal() == wxID_OK) {
+        wxMessageBox(
+            wxString::Format(
+                "Event name: %s\nEvent description: %s\n",
+                dialog->name,
+                dialog->description
+            )
+        );
+    }
+
+    dialog->Destroy();
+}
+
+void MainFrame::createNewEventPanel() {
+    wxPanel* eventSizer = new wxPanel(this, wxID_ANY);
+
 }

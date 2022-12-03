@@ -18,9 +18,8 @@ public:
         long style = wxDEFAULT_DIALOG_STYLE,
         const wxString &name = wxASCII_STR(wxDialogNameStr)
     );
-
-private:
-    string eventName;
+// private:
+    string name;
     string description;
     int day;
     vector<bool> repeatingDays;
@@ -28,4 +27,25 @@ private:
     int endTime;
     int durationMinute;
     int priority;
+
+    wxTextCtrl* nameInputCtrl;
+    wxTextCtrl* descriptionInputCtrl;
+    wxChoice* dayChoice;
+    wxTextCtrl* repeatingDaysInputCtrl;
+    wxTextCtrl* startTimeInputCtrl;
+    wxTextCtrl* endTimeInputCtrl;
+    wxChoice* priorityChoice;
+
+    wxCheckBox* monCheckBox;
+    wxCheckBox* tueCheckBox;
+    wxCheckBox* wedCheckBox;
+    wxCheckBox* thuCheckBox;
+    wxCheckBox* friCheckBox;
+    wxCheckBox* satCheckBox;
+    wxCheckBox* sunCheckBox;
+
+
+private:
+    virtual bool TransferDataFromWindow() override;
+    void onClickOkUpdate();
 };
