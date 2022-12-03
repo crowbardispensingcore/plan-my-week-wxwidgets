@@ -7,16 +7,16 @@
 #include <stack>
 #include <utility>
 #include "event.h"
-class scheduler {
+class Scheduler {
 public:
-	scheduler();
+	Scheduler();
 	void create_event();
 	//pushes event into priority queue based on priority
-	void push_event(event e);
+	void push_event(Event e);
 	//pops event at top of priority queue
 	void pop_event();
 	//returns event at top of priority queue
-	event top();
+	Event top();
 	//reorders days of the week based on how population of events low to high
 	void reorder_busy();
 	//converts military time to index of vector to represent that time
@@ -32,14 +32,14 @@ public:
 	//prints the weeks schedule onto terminal
 	void print_schedule();
 	//pushes event with time conflict onto time conflict stack
-	void push_timeConflict(event e);
+	void push_timeConflict(Event e);
 private:
 	vector<vector<int>> times;
 	vector<pair<int, int>>busy;
-	vector<list<event>> events;
+	vector<list<Event>> events;
 	//priority event queue(eq) for storing events
-	priority_queue<event> eq;
-	stack<event>timeConflicts;
+	priority_queue<Event> eq;
+	stack<Event>timeConflicts;
 	//searches for next optimal and available spot in schedule for an event and returns the day and time as a pair
 	pair<int, int> search_time();
 };

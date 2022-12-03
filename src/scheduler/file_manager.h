@@ -5,16 +5,16 @@
 
 using namespace std;
 
-class fileManager {
+class FileManager {
 public:
     //default constructor 
-    fileManager();
+    FileManager();
     //opens a input file given filename
     void open_file(string filename);    
     //closes the current input file
     void close_file();   
     //retrieves next event in opened file and returns an event object
-    event get_event();    
+    Event get_event();    
     //checks if input file stream has reached end of file
     bool eof();
 private:
@@ -22,6 +22,6 @@ private:
     ofstream ofs;
     bool file_opened;
     //converts event data from string to event object
-    event convert_event(string s);   
+    Event convert_event(string s);   
 };
 #endif

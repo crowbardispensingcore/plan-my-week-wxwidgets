@@ -1,6 +1,6 @@
 #include "event.h"
 //default constructor to initialize a new event
-event::event() {    
+Event::Event() {    
 	name = "";
 	description = "";
 	duration = 0;
@@ -10,7 +10,7 @@ event::event() {
 	priority = 0;        //0 refers to highest priority 
 }
 //paramaterized constructor 
-event::event(string name, string description, int duration,
+Event::Event(string name, string description, int duration,
 	int startTime, int endTime, int priority, int specificDay) 
 {
 	this->name = name;
@@ -21,17 +21,17 @@ event::event(string name, string description, int duration,
 	this->specificDay = specificDay;
 }
 //prints a single events details
-void event::print_event() {
+void Event::print_event() {
 	cout << "Event Name: " << this->name << endl;
 	cout << "Event Description " << this->description << endl;
 	cout << "Start Time: " << mil_to_std(this->startTime) << " End Time: "<< mil_to_std(this->endTime) <<" Duration: "<<dur_to_std(this->duration) << endl;
 }
 //overloaded operator to compare event priority
-bool operator<(const event& lhs, const event& rhs) {
+bool operator<(const Event& lhs, const Event& rhs) {
 	return lhs.priority > rhs.priority;
 }
 //converts military time to standard time for printing
-string event::mil_to_std(int time) {
+string Event::mil_to_std(int time) {
 	int hour = time / 100;
 	int minute = time - hour * 100;
 	string timeframe = "";
@@ -57,7 +57,7 @@ string event::mil_to_std(int time) {
 	return returnTime;
 }
 //converts duration in minutes to hours and minutes
-string event::dur_to_std(int duration) {
+string Event::dur_to_std(int duration) {
 	int hour = duration / 60;
 	int minute = duration - hour * 60;
 	string returnTime;

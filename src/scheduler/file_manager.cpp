@@ -7,11 +7,11 @@
 
 using namespace std;
 //default constructor 
-fileManager::fileManager() {
+FileManager::FileManager() {
     file_opened = false;
 }
 //opens a input file given filename
-void fileManager::open_file(string filename) {
+void FileManager::open_file(string filename) {
     ifs.open(filename);
     if (ifs.fail()) {
         cout << "ERROR! " << filename << " opening failure" << endl;
@@ -21,7 +21,7 @@ void fileManager::open_file(string filename) {
     return;
 }
 //closes the current input file 
-void fileManager::close_file() {
+void FileManager::close_file() {
     if (!file_opened) {
         cout << "ERROR! No file currently opened" << endl;
     }
@@ -31,7 +31,7 @@ void fileManager::close_file() {
     }
 }
 //retrieves next event in opened file and returns an event object
-event fileManager::get_event() {
+Event FileManager::get_event() {
     if (!file_opened) {
         cout << "ERROR! No file currently opened" << endl;
         exit(1);
@@ -44,7 +44,7 @@ event fileManager::get_event() {
     }
 }
 //converts event data from string to event object
-event fileManager::convert_event(string s) {
+Event FileManager::convert_event(string s) {
     vector<string> vars;
     stringstream ss(s);
     while (ss.good()) {
@@ -52,11 +52,11 @@ event fileManager::convert_event(string s) {
         getline(ss, substr, ',');
         vars.push_back(substr);
     }
-    event e(vars[0], vars[1], stoi(vars[2]), stoi(vars[3]), stoi(vars[4]), stoi(vars[5]), stoi(vars[6]));
+    Event e(vars[0], vars[1], stoi(vars[2]), stoi(vars[3]), stoi(vars[4]), stoi(vars[5]), stoi(vars[6]));
     return e;
 }
 //checks if input file stream has reached end of file
-bool fileManager::eof() {
+bool FileManager::eof() {
     if (ifs.eof()) {
         return true;
     }

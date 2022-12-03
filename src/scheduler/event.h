@@ -7,20 +7,20 @@
 
 using namespace std;
 
-class event {
+class Event {
 public:
 	//default constructor to initialize a new event
-	event();
+	Event();
 	//paramaterized constructor 
 
-	event(string name, string description, int duration, 
+	Event(string name, string description, int duration, 
 		int startTime, int endTime, int priority, int specificDay);
 
 	//prints a single events details
 	void print_event();    
 
 	//overloaded operator to compare event priority
-	friend bool operator<(const event& lhs, const event& rhs);
+	friend bool operator<(const Event& lhs, const Event& rhs);
 
 	//converts military time to standard time for printing
 	string mil_to_std(int time);

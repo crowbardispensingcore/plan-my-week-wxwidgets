@@ -4,7 +4,7 @@
 #include "event.h"
 
 using namespace std;
-scheduler::scheduler() {
+Scheduler::Scheduler() {
 	times.resize(7);
 	events.resize(7);
 	busy.resize(7);
@@ -16,24 +16,24 @@ scheduler::scheduler() {
 		}
 	}
 }
-void scheduler::create_event() {
+void Scheduler::create_event() {
 
 }
 //pushes event into priority queue based on priority
-void scheduler::push_event(event e) {
+void Scheduler::push_event(Event e) {
 	eq.emplace(e);
 }
 //pops event at top of priority queue
-void scheduler::pop_event() {
+void Scheduler::pop_event() {
 	eq.pop();
 }
 //returns event at top of priority queue
-event scheduler::top() {
+Event Scheduler::top() {
 	return eq.top();
 }
 //reorders days of the week based on how population of events low to high
 //Uses Insertion Sort 
-void scheduler::reorder_busy() {
+void Scheduler::reorder_busy() {
 	int i, j;
 	pair<int, int> key;
 	for (i = 1; i < 7; i++)
@@ -50,7 +50,7 @@ void scheduler::reorder_busy() {
 	}
 }
 //converts military time to index of vector to represent that time
-int scheduler::time_to_idx(int time) {
+int Scheduler::time_to_idx(int time) {
 	int first, second, third, fourth, final;
 	final = 0;
 	first = time / 1000;
@@ -67,7 +67,7 @@ int scheduler::time_to_idx(int time) {
 	return (final / 15) - 1;
 }
 //converts index of vector to military time
-int scheduler::idx_to_time(int index) {
+int Scheduler::idx_to_time(int index) {
 	int startTime = (index + 1) * 15;  //time in minutes 
 	int hour = startTime / 60;
 	int minute = startTime % 60;
@@ -77,7 +77,7 @@ int scheduler::idx_to_time(int index) {
 	return startTime;
 }
 //calculates index of event end time in vector 
-int scheduler::calc_end_idx(int start_index, int duration) {
+int Scheduler::calc_end_idx(int start_index, int duration) {
 	int returnvalue = start_index;
 	int temp = duration;
 	returnvalue += temp / 15;
@@ -87,7 +87,7 @@ int scheduler::calc_end_idx(int start_index, int duration) {
 	return returnvalue;
 }
 //calculates and returns length of duration in terms of vector index sizing
-int scheduler::dur_length(int dur) {
+int Scheduler::dur_length(int dur) {
 	int duration = dur;
 	duration = duration / 15;
 	duration *= 15;
@@ -97,8 +97,8 @@ int scheduler::dur_length(int dur) {
 	return duration;
 }
 //searches for next optimal and available spot in schedule for an event and returns the day and time as a pair
-pair<int, int> scheduler::search_time() {
-	event curr_event = eq.top();
+pair<int, int> Scheduler::search_time() {
+	Event curr_event = eq.top();
 	int duration = dur_length(curr_event.get_duration());
 	int startTime = curr_event.get_startTime();
 	int endTime = curr_event.get_endTime();
@@ -207,10 +207,10 @@ pair<int, int> scheduler::search_time() {
 	}
 }
 //creates schedule based on priority of events 
-void scheduler::make_schedule() {
-	event e;
+void Scheduler::make_schedule() {
+	Event e;
 	int durLength;
-	list<event>::iterator it;
+	list<Event>::iterator it;
 	while (eq.size() > 1) {
 		e = eq.top();
 		durLength = dur_length(e.get_duration()) / 15;
@@ -251,8 +251,8 @@ void scheduler::make_schedule() {
 	}
 }
 //prints the weeks schedule onto terminal
-void scheduler::print_schedule() {
-	list<event>::iterator it;
+void Scheduler::print_schedule() {
+	list<Event>::iterator it;
 	string day;
 	for (int i = 0; i < 7; i++) {
 		it = events[i].begin();
@@ -297,6 +297,6 @@ void scheduler::print_schedule() {
 	}
 }
 //pushes event with time conflict onto time conflict stack
-void scheduler::push_timeConflict(event e) {
+void Scheduler::push_timeConflict(Event e) {
 	timeConflicts.push(e);
 }
