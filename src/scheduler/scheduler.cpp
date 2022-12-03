@@ -19,20 +19,24 @@ scheduler::scheduler() {
 void scheduler::create_event() {
 
 }
-//pushes event into priority queue based on priority
 void scheduler::push_event(event e) {
 	eq.emplace(e);
 }
-//pops event at top of priority queue
 void scheduler::pop_event() {
 	eq.pop();
 }
-//returns event at top of priority queue
 event scheduler::top() {
 	return eq.top();
 }
-//reorders days of the week based on how population of events low to high
-//Uses Insertion Sort 
+void scheduler::append_event() {
+	if (eq.empty()) {
+		cout << "ERROR! Nothing in queue to append" << endl;
+		return;
+	}
+	else {
+		return;
+	}
+}
 void scheduler::reorder_busy() {
 	int i, key, j;
 	for (i = 1; i < 7; i++)
@@ -47,22 +51,6 @@ void scheduler::reorder_busy() {
 		}
 		busy[j + 1].second = key;
 	}
-}
-int scheduler::convert_time(int time) {
-	int first, second, third, fourth, final;
-	final = 0;
-	first = time / 1000;
-	second = (time - first * 1000) / 100;
-	third = ((time - first * 1000) - (second * 100)) / 10;
-	fourth = ((time - first * 1000) - (second * 100)) - (third * 10);
-
-	int hour, minutes;
-	hour = first * 10 + second;
-	hour *= 60;
-	minutes = third * 10 + fourth;
-	final = hour + minutes;
-
-	return (final / 15) - 1;
 }
 int scheduler::find_end_index(int start_index, int duration) {
 	int returnvalue = start_index;
@@ -245,40 +233,29 @@ int scheduler::find_startTime(int index) {
 }
 void scheduler::print_schedule() {
 	list<event>::iterator it;
-	string day;
 	for (int i = 0; i < 7; i++) {
 		it = events[i].begin();
-		switch (i) {
-			case 0:
-				cout << "Monday" << endl;
-				break;
-			case 1:
-				cout << "Tuesday" << endl;
-				break;
-			case 2:
-				cout << "Wednesday" << endl;
-				break;
-			case 3:
-				cout << "Thursday" << endl;
-				break;
-			case 4:
-				cout << "Friday" << endl;
-				break;
-			case 5:
-				cout << "Saturday" << endl;
-				break;
-			case 6:
-				cout << "Sunday" << endl;
-				break;
-			default:
-				break;
-		}
+		cout << i << endl;
 		for (it = events[i].begin(); it != events[i].end(); ++it) {
 			it->print_event();
-			cout << endl;
 		}
-		cout << endl;
 	}
+}
+int scheduler::convert_time(int time) {
+	int first, second, third, fourth, final;
+	final = 0;
+	first = time / 1000;
+	second = (time - first * 1000) / 100;
+	third = ((time - first * 1000) - (second * 100)) / 10;
+	fourth = ((time - first * 1000) - (second * 100)) - (third * 10);
+
+	int hour , minutes;
+	hour = first * 10 + second;
+	hour *= 60;
+	minutes = third * 10 + fourth;
+	final = hour + minutes;
+
+	return (final / 15)-1;
 }
 void scheduler::push_timeConflict(event e) {
 	timeConflicts.push(e);
