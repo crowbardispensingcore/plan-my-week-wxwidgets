@@ -34,18 +34,19 @@ event scheduler::top() {
 //reorders days of the week based on how population of events low to high
 //Uses Insertion Sort 
 void scheduler::reorder_busy() {
-	int i, key, j;
+	int i, j;
+	pair<int, int> key;
 	for (i = 1; i < 7; i++)
 	{
-		key = busy[i].second;
+		key = busy[i];
 		j = i - 1;
 
-		while (j >= 0 && busy[j].second > key)
+		while (j >= 0 && busy[j].second > key.second)
 		{
-			busy[j + 1].second = busy[j].second;
+			busy[j + 1] = busy[j];
 			j = j - 1;
 		}
-		busy[j + 1].second = key;
+		busy[j + 1] = key;
 	}
 }
 //converts military time to index of vector to represent that time
@@ -79,7 +80,7 @@ int scheduler::idx_to_time(int index) {
 int scheduler::calc_end_idx(int start_index, int duration) {
 	int returnvalue = start_index;
 	int temp = duration;
-	returnvalue += temp/15;
+	returnvalue += temp / 15;
 	if (temp % 15 != 0) {
 		returnvalue += 1;
 	}
@@ -229,7 +230,7 @@ void scheduler::make_schedule() {
 			push_timeConflict(eq.top());
 		}
 		else {
-			for (int i = curr_event.second; i < curr_event.second+ durLength; i++) {
+			for (int i = curr_event.second; i < curr_event.second + durLength; i++) {
 				times[curr_event.first][i] = 1;
 			}
 			it = events[curr_event.first].begin();
@@ -256,29 +257,29 @@ void scheduler::print_schedule() {
 	for (int i = 0; i < 7; i++) {
 		it = events[i].begin();
 		switch (i) {
-			case 0:
-				cout << "Monday" << endl;
-				break;
-			case 1:
-				cout << "Tuesday" << endl;
-				break;
-			case 2:
-				cout << "Wednesday" << endl;
-				break;
-			case 3:
-				cout << "Thursday" << endl;
-				break;
-			case 4:
-				cout << "Friday" << endl;
-				break;
-			case 5:
-				cout << "Saturday" << endl;
-				break;
-			case 6:
-				cout << "Sunday" << endl;
-				break;
-			default:
-				break;
+		case 0:
+			cout << "Monday" << endl;
+			break;
+		case 1:
+			cout << "Tuesday" << endl;
+			break;
+		case 2:
+			cout << "Wednesday" << endl;
+			break;
+		case 3:
+			cout << "Thursday" << endl;
+			break;
+		case 4:
+			cout << "Friday" << endl;
+			break;
+		case 5:
+			cout << "Saturday" << endl;
+			break;
+		case 6:
+			cout << "Sunday" << endl;
+			break;
+		default:
+			break;
 		}
 		for (it = events[i].begin(); it != events[i].end(); ++it) {
 			it->print_event();

@@ -12,9 +12,9 @@ public:
 	scheduler();
 	void create_event();
 	//pushes event into priority queue based on priority
-	void push_event(event e);    
+	void push_event(event e);
 	//pops event at top of priority queue
-	void pop_event();   
+	void pop_event();
 	//returns event at top of priority queue
 	event top();
 	//reorders days of the week based on how population of events low to high
@@ -44,3 +44,4 @@ private:
 	pair<int, int> search_time();
 };
 #endif
+
