@@ -38,7 +38,7 @@ public:
 	void set_startTime(int startTime) { this->startTime = startTime; }
 	void set_endTime(int endTime) { this->endTime = endTime; }
 	void set_specificDay(int specificDay) { this->specificDay = specificDay; }
-private: 
+// private: 
 	string name;           //name of the event 
 	string description;    //description of the event
 	int duration;          //duration of event in minutes 

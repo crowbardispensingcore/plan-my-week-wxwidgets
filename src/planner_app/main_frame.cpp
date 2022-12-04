@@ -8,30 +8,41 @@ using std::cout;
 using std::endl;
 
 MainFrame::MainFrame(const wxString& title,
-                 const wxPoint& pos, const wxSize& size)
-    : wxFrame(NULL, wxID_ANY, title, pos, size)
+                 const wxPoint& pos, const wxSize& size, PlannerApp* app)
+    : 
+    wxFrame(NULL, wxID_ANY, title, pos, size),
+    app(app)
 {
     initMenu();
 
-    wxSizer* mainFrameSizer = new wxBoxSizer(wxHORIZONTAL);
+    mainFrameSizer = new wxBoxSizer(wxHORIZONTAL);
+    mainFrameSizer->AddSpacer(50);
 
 
+    // Monday panel
+    // wxSizer* monSizer = new wxBoxSizer(wxVERTICAL);
+    // wxPanel* monPanel = new wxPanel(this, wxID_ANY);
+    // monSizer->AddSpacer(20);
+    // monSizer->Add(new wxStaticText(monPanel, wxID_ANY, "Monday"), 0, wxALIGN_CENTER, 0);
+    // monSizer->AddSpacer(20);
+    // for (int i = 0; i < 10; i++) {
+    //     addNewEventPanel(monSizer, monPanel);
+    // }
+    // monPanel->SetSizer(monSizer);
+    // mainFrameSizer->Add(monPanel);
+    // mainFrameSizer->AddSpacer(50);
 
+
+    addNewDayPanel(mainFrameSizer, "Monday", 0);
+    addNewDayPanel(mainFrameSizer, "Tuesday", 1);
+    addNewDayPanel(mainFrameSizer, "Wednesday", 2);
+    addNewDayPanel(mainFrameSizer, "Thursday", 3);
+    addNewDayPanel(mainFrameSizer, "Friday", 4);
+    addNewDayPanel(mainFrameSizer, "Saturday", 5);
+    addNewDayPanel(mainFrameSizer, "Sunday", 6);
     
-    wxSizer* monSizer = new wxBoxSizer(wxVERTICAL);
-    wxPanel* monPanel = new wxPanel(this, wxID_ANY);
-    
-    for (int i = 0; i < 10; i++) {
-        createNewEventPanel(monSizer, monPanel);
-    }
-
-    monPanel->SetSizer(monSizer);
-
-    mainFrameSizer->Add(monPanel);
-
-    
-
-
+    SetSizer(mainFrameSizer);
+    Fit();
     CreateStatusBar();
     SetStatusText("Welcome to Plan My Week!");
 }
@@ -86,19 +97,82 @@ void MainFrame::onCreateNewEvent(wxCommandEvent& event)
                 dialog->description
             )
         );
+        for (int i = 0; i < 7; i++) {
+            dayPanels[i]->DestroyChildren();
+        }
+        addNewDayPanel(mainFrameSizer, "LOLOLOLOL", 0);
+        SetSizer(mainFrameSizer);
+        Fit();
+        Refresh();
     }
 
     dialog->Destroy();
 }
 
-void MainFrame::createNewEventPanel(wxSizer* parentSizer, wxPanel* parentPanel) {
+void MainFrame::addNewDayPanel(wxSizer* parentSizer, string day, int index) {
+    wxSizer* daySizer = new wxBoxSizer(wxVERTICAL);
+    dayPanels[index] = new wxPanel(this, wxID_ANY);
+    daySizer->AddSpacer(20);
+    daySizer->Add(new wxStaticText(dayPanels[index], wxID_ANY, day), 0, wxALIGN_CENTER, 0);
+    daySizer->AddSpacer(20);
+
+    std::list<Event>::iterator it;
+    for (it = app->scheduler.events[index].begin(); it != app->scheduler.events[index].end(); ++it) {
+        addNewEventPanel(daySizer, dayPanels[index], it);
+    }
+    dayPanels[index]->SetSizer(daySizer);
+    parentSizer->Add(dayPanels[index]);
+    parentSizer->AddSpacer(50);
+}
+
+void MainFrame::addNewEventPanel(wxSizer* parentSizer, wxPanel* parentPanel, std::list<Event>::iterator it) {
+    string name = it->name;
+    string description = it->description;
+    int startTime = it->startTime;
+    int endTime = it->endTime;
+    int duration = it->duration;
+
+
     wxPanel* eventPanel = new wxPanel(parentPanel, wxID_ANY);
+    eventPanel->SetMinSize(wxSize(250, 100));
+    eventPanel->SetBackgroundColour(wxColor(75, 186, 134));
     wxSizer* eventSizer = new wxBoxSizer(wxVERTICAL);
 
-    wxStaticText* eventLabel = new wxStaticText(eventPanel, wxID_ANY, "Test Event");
+    // Event name
+    wxStaticText* eventLabel = new wxStaticText(eventPanel, wxID_ANY, name);
+    eventLabel->SetForegroundColour(wxColor(*wxBLACK));
+    eventSizer->Add(eventLabel, 0, wxALIGN_CENTER, 0);
 
-    eventSizer->Add(eventLabel);
+    eventSizer->AddSpacer(5);
+    
+    // Event time
+    wxStaticText* timeLabel = new wxStaticText(
+        eventPanel, wxID_ANY,
+        wxString::Format("%d ~ %d", startTime, endTime)
+    );
+    timeLabel->SetForegroundColour(wxColor(*wxBLACK));
+    eventSizer->Add(timeLabel, 0, wxALIGN_CENTER, 0);
+    // Event duration
+    wxStaticText* durationLabel = new wxStaticText(
+        eventPanel, wxID_ANY,
+        wxString::Format("%d minutes", duration)
+    );
+    durationLabel->SetForegroundColour(wxColor(*wxBLACK));
+    eventSizer->Add(durationLabel, 0, wxALIGN_CENTER, 0);
+
+    eventSizer->AddSpacer(5);
+
+    // Event duration
+    wxStaticText* descriptionLabel = new wxStaticText(
+        eventPanel, wxID_ANY,
+        wxString::Format("  %s", description)
+    );
+    descriptionLabel->SetForegroundColour(wxColor(*wxBLACK));
+    descriptionLabel->Wrap(parentPanel->GetSize().GetX());
+    eventSizer->Add(descriptionLabel, 0, wxALIGN_CENTER, 0);
+
     eventPanel->SetSizer(eventSizer);
 
     parentSizer->Add(eventPanel);
+    parentSizer->AddSpacer(20);
 }

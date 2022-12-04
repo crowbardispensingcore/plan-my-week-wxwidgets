@@ -1,12 +1,22 @@
 #pragma once
 
-#include <iostream>
 #include <wx/wx.h>
 
-using namespace std;
+#include <iostream>
+#include <vector>
+
+#include "scheduler.h"
+#include "file_manager.h"
+#include "event_factory.h"
 
 class PlannerApp: public wxApp
 {
 public:
     virtual bool OnInit() override;
+    bool initData();
+// private:
+    FileManager fm;
+    Scheduler scheduler;
+    EventFactory eventFactory;
+    
 };

@@ -17,11 +17,13 @@ public:
     Event get_event();    
     //checks if input file stream has reached end of file
     bool eof();
+
+    Event convert_event(string s);
 private:
-    ifstream ifs;    
+    ifstream ifs;
     ofstream ofs;
     bool file_opened;
     //converts event data from string to event object
-    Event convert_event(string s);   
+    // Event convert_event(string s);
 };
 #endif

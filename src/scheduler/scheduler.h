@@ -34,7 +34,7 @@ public:
 	//pushes event with time conflict onto time conflict stack
 	void print_schdedule(int day);
 	void push_timeConflict(Event e);
-private:
+// private:
 	vector<vector<int>> times;
 	vector<pair<int, int>>busy;
 	vector<list<Event>> events;
