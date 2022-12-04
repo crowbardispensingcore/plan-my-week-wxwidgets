@@ -2,7 +2,7 @@
 #define EVENT_FACTORY_H
 
 #include <string>
-#include "event.h"
+#include "event.H"
 
 class EventFactory {
 public:

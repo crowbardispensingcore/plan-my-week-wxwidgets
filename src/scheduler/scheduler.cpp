@@ -296,6 +296,9 @@ void Scheduler::print_schedule() {
 		}
 	}
 }
+void print_schedule(int day) {
+
+}
 //pushes event with time conflict onto time conflict stack
 void Scheduler::push_timeConflict(Event e) {
 	timeConflicts.push(e);

@@ -32,6 +32,7 @@ public:
 	//prints the weeks schedule onto terminal
 	void print_schedule();
 	//pushes event with time conflict onto time conflict stack
+	void print_schdedule(int day);
 	void push_timeConflict(Event e);
 private:
 	vector<vector<int>> times;
